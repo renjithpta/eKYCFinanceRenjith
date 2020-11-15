@@ -1,0 +1,44 @@
+[
+    {
+        "transactionName": "eKycExists",
+        "transactionLabel": "A test eKycExists transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "createEKyc",
+        "transactionLabel": "A test createEKyc transaction",
+        "arguments": [
+            "001",
+            "some value"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "readEKyc",
+        "transactionLabel": "A test readEKyc transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "updateEKyc",
+        "transactionLabel": "A test updateEKyc transaction",
+        "arguments": [
+            "001",
+            "some other value"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "deleteEKyc",
+        "transactionLabel": "A test deleteEKyc transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    }
+]

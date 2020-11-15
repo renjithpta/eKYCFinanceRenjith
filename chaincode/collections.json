@@ -1,0 +1,187 @@
+[
+    {
+         "name": "FI1MSPKycCollection",
+         "policy": {
+              "identities": [
+                   {
+                        "role": {
+                             "name": "member",
+                             "mspId": "FI1MSP"
+                        }
+                   }
+              ],
+              "policy": {
+                   "1-of": [
+
+                        {
+                             "signed-by": 0
+                        }
+                   ]
+              }
+         },
+         "requiredPeerCount": 0,
+         "maxPeerCount": 1,
+         "blockToLive": 0,
+         "memberOnlyRead": true
+    },
+    {
+     "name": "FI2MSPKycCollection",
+     "policy": {
+          "identities": [
+               {
+                    "role": {
+                         "name": "member",
+                         "mspId": "FI2MSP"
+                    }
+               }
+          ],
+          "policy": {
+               "1-of": [
+
+                    {
+                         "signed-by": 0
+                    }
+               ]
+          }
+     },
+     "requiredPeerCount": 0,
+     "maxPeerCount": 1,
+     "blockToLive": 0,
+     "memberOnlyRead": true,
+     "memberOnlyWrite": true
+
+
+},
+{
+     "name": "FI3MSPKycCollection",
+     "policy": {
+          "identities": [
+               {
+                    "role": {
+                         "name": "member",
+                         "mspId": "FI3MSP"
+                    }
+               }
+          ],
+          "policy": {
+               "1-of": [
+
+                    {
+                         "signed-by": 0
+                    }
+               ]
+          }
+     },
+     "requiredPeerCount": 0,
+     "maxPeerCount": 1,
+     "blockToLive": 0,
+     "memberOnlyRead": true,
+     "memberOnlyWrite": true
+},
+
+{
+     "name": "FI1MSPFI2MSPKycCollection",
+     "policy": {
+          "identities": [
+               {
+                    "role": {
+                         "name": "member",
+                         "mspId": "FI1MSP"
+                    }
+               },
+               {
+                    "role": {
+                         "name": "member",
+                         "mspId": "FI2MSP"
+                    }
+               }
+          ],
+          "policy": {
+               "1-of": [
+
+                    {
+                         "signed-by": 0
+                    },
+                    {
+                         "signed-by": 1
+                    }
+               ]
+          }
+     },
+     "requiredPeerCount": 1,
+     "maxPeerCount": 1,
+     "blockToLive": 0,
+     "memberOnlyRead": true,
+     "memberOnlyWrite": true
+},
+{
+     "name": "FI1MSPFI3MSPKycCollection",
+     "policy": {
+          "identities": [
+               {
+                    "role": {
+                         "name": "member",
+                         "mspId": "FI1MSP"
+                    }
+               },
+               {
+                    "role": {
+                         "name": "member",
+                         "mspId": "FI3MSP"
+                    }
+               }
+          ],
+          "policy": {
+               "1-of": [
+
+                    {
+                         "signed-by": 0
+                    },
+                    {
+                         "signed-by": 1
+                    }
+               ]
+          }
+     },
+     "requiredPeerCount": 1,
+     "maxPeerCount": 1,
+     "blockToLive": 0,
+     "memberOnlyRead": true,
+     "memberOnlyWrite": true
+},
+{
+     "name": "FI2MSPFI3MSPKycCollection",
+     "policy": {
+          "identities": [
+               {
+                    "role": {
+                         "name": "member",
+                         "mspId": "FI2MSP"
+                    }
+               },
+               {
+                    "role": {
+                         "name": "member",
+                         "mspId": "FI3MSP"
+                    }
+               }
+          ],
+          "policy": {
+               "1-of": [
+
+                    {
+                         "signed-by": 0
+                    },
+                    {
+                         "signed-by": 1
+                    }
+               ]
+          }
+     },
+     "requiredPeerCount": 1,
+     "maxPeerCount": 1,
+     "blockToLive": 0,
+     "memberOnlyRead": true,
+     "memberOnlyWrite": true
+}
+]
