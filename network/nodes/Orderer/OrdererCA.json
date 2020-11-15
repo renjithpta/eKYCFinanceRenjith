@@ -1,0 +1,11 @@
+{
+    "api_url": "http://localhost:17050",
+    "ca_name": "ca",
+    "container_name": "ca.orderer.finance.security",
+    "identity": "admin",
+    "msp_id": "OrdererMSP",
+    "name": "OrdererCA",
+    "short_name": "OrdererCA",
+    "type": "fabric-ca",
+    "wallet": "Orderer"
+}

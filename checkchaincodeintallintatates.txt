@@ -1,0 +1,73 @@
+export FABRIC_CFG_PATH=/home/ubuntu/.ansible/roles/ibm.blockchain_platform_manager/files/sampleconfig
+export CORE_PEER_ADDRESS=localhost:18051
+export CORE_PEER_MSPCONFIGPATH=/home/ubuntu/workspace/network/wallets/FI1/FI1Admin/
+export CORE_PEER_ADDRESS=localhost:18051
+export CORE_PEER_LOCALMSPID=FI1MSP
+peer chaincode list --instantiated -C financechannel
+
+peer chaincode list --installed -C financechannel
+
+
+
+
+ peer chaincode instantiate
+    -C {{ channel.name }}
+    -c '{"Args":[]}'
+    -n {{ contract.name }}
+    -v {{ contract.version }}
+    -P {{ channel.endorsement_policy | quote }}
+    -o {{ ibp[channel.orderer.id].hostname }}:{{ ibp[channel.orderer.id].port }}
+    {{ '--collections-config "' + channel.collections_config + '"' if channel.collections_config is defined else '' }}
+    {{ '--tls' if ibp[channel.orderer.id].protocol == 'grpcs' else '' }}
+    {{ '--cafile "' + ibp[channel.orderer.id].pem + '"' if ibp[channel.orderer.id].protocol == 'grpcs' else '' }}
+    {{ '--ordererTLSHostnameOverride ' + ibp[channel.orderer.id].internal_hostname if ibp[channel.orderer.id].internal_hostname is defined else '' }}
+  environment:
+    FABRIC_CFG_PATH: "{{ role_path }}/files/sampleconfig"
+    CORE_PEER_ADDRESS: "{{ ibp[peer.id].hostname }}:{{ ibp[peer.id].port }}"
+    CORE_PEER_MSPCONFIGPATH: "{{ member.wallet }}/{{ member.msp.admin.identity }}"
+    CORE_PEER_LOCALMSPID: "{{ member.msp.id }}"
+    CORE_PEER_TLS_ENABLED: "{{ 'true' if peer.tls.enabled else 'false' }}"
+    CORE_PEER_TLS_ROOTCERT_FILE: "{{ ibp[peer.id].pem if ibp[peer.id].pem is defined }}"
+  when: (not contract_instantiated) and (not contract_instantiated_anyversion)
+
+- name: Upgrade contract on channel
+  command: >
+    peer chaincode upgrade
+    -C {{ channel.name }}
+    -c '{"Args":[]}'
+    -n {{ contract.name }}
+    -v {{ contract.version }}
+    -P {{ channel.endorsement_policy | quote }}
+    -o {{ ibp[channel.orderer.id].hostname }}:{{ ibp[channel.orderer.id].port }}
+    {{ '--collections-config "' + channel.collections_config + '"' if channel.collections_config is defined else '' }}
+    {{ '--tls' if ibp[channel.orderer.id].protocol == 'grpcs' else '' }}
+    {{ '--cafile "' + ibp[channel.orderer.id].pem + '"' if ibp[channel.orderer.id].protocol == 'grpcs' else '' }}
+    {{ '--ordererTLSHostnameOverride ' + ibp[channel.orderer.id].internal_hostname if ibp[channel.orderer.id].internal_hostname is defined else '' }}
+  environment:
+    FABRIC_CFG_PATH: "{{ role_path }}/files/sampleconfig"
+    CORE_PEER_ADDRESS: "{{ ibp[peer.id].hostname }}:{{ ibp[peer.id].port }}"
+    CORE_PEER_MSPCONFIGPATH: "{{ member.wallet }}/{{ member.msp.admin.identity }}"
+    CORE_PEER_LOCALMSPID: "{{ member.msp.id }}"
+    CORE_PEER_TLS_ENABLED: "{{ 'true' if peer.tls.enabled else 'false' }}"
+    CORE_PEER_TLS_ROOTCERT_FILE: "{{ ibp[peer.id].pem if ibp[peer.id].pem is defined }}"
+  when: (not contract_instantiated) and contract_instantiated_anyversion
+
+
+command: peer chaincode install "{{ contract.package }}"
+  environment:
+    FABRIC_CFG_PATH: "{{ role_path }}/files/sampleconfig"
+    CORE_PEER_ADDRESS: "{{ ibp[peer.id].hostname }}:{{ ibp[peer.id].port }}"
+    CORE_PEER_MSPCONFIGPATH: "{{ member.wallet }}/{{ member.msp.admin.identity }}"
+    CORE_PEER_LOCALMSPID: "{{ member.msp.id }}"
+    CORE_PEER_TLS_ENABLED: "{{ 'true' if peer.tls.enabled else 'false' }}"
+    CORE_PEER_TLS_ROOTCERT_FILE: "{{ ibp[peer.id].pem if ibp[peer.id].pem is defined }}"
+export CHANNEL_NAME=mychannel
+export CACERT_ORDERER=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/el-network.com/orderers/orderer.el-network.com/tls/ca.crt
+
+if [ $# == 5 ];
+    then
+        peer chaincode invoke -o orderer.el-network.com:7050 -C $CHANNEL_NAME -n go -c "{\"Args\":[\"createCar\",\"$1\",\"$2\",\"$3\",\"$4\",\"$5\"]}" --tls --cafile $CACERT_ORDERER
+    else
+
+
+    peer chaincode invoke -o "localhost:17051" -C financechannel -n eKYC -c '{"Args":["getClientData","CLIENT02","name"]}

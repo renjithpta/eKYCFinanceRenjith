@@ -1,0 +1,10 @@
+{
+    "api_url": "grpc://localhost:17051",
+    "container_name": "orderer.finance.security",
+    "identity": "ordererAdmin",
+    "msp_id": "OrdererMSP",
+    "name": "Orderer1",
+    "short_name": "Orderer1",
+    "type": "fabric-orderer",
+    "wallet": "Orderer"
+}

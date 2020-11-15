@@ -1,0 +1,239 @@
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+---
+- name: Deploy Finance Security Kyc Blockchain infrastructure
+  hosts: localhost
+  vars:
+    #
+    # For information on these configuration options, read the documentation:
+    # https://github.com/IBM-Blockchain/ansible-role-blockchain-platform-manager#example-playbook
+    #
+    infrastructure:
+      type: docker
+      docker:
+        network: finance
+
+    organizations:
+      - &FI1
+        msp:
+          id: "FI1MSP"
+          admin:
+            identity: "F11Admin"
+            secret: "FI1Adminpw"
+          ibp:
+            display_name: "FI1 MSP"
+        ca: &FI1CA
+          id: "FI1CA"
+          admin_identity: "admin"
+          admin_secret: "adminpw"
+          tls:
+            enabled: false
+          docker:
+            name: ca.fi1.finance.security
+            hostname: ca.fi1.finance.security
+            port: 18050
+          ibp:
+            display_name: "FI1 CA"
+        peers:
+          - &FI1Peer1
+            id: "FI1Peer1"
+            identity: "fi1Peer1"
+            secret: "fi1Peer1"
+            database_type: couchdb
+            tls:
+              enabled: false
+              identity: "org1peer1tls"
+              secret: "org1peer1tlspw"
+            docker:
+              name: peer0.fi1.finance.security
+              hostname: peer0.fi1.finance.security
+              port: 18051
+              chaincode_port: 18052
+              operations_port: 18053
+              couchdb:
+                name: couchdb0.fi1.finance.security
+                hostname: couchdb0.fi1.finance.security
+                port: 18054
+            ibp:
+              display_name: "fi1 Peer1"
+      
+        nodes: "{{ playbook_dir }}/nodes/FI1"
+        wallet: "{{ playbook_dir }}/wallets/FI1"
+        gateways: "{{ playbook_dir }}/gateways/FI1"
+      - &FI2
+        msp:
+          id: "FI2MSP"
+          admin:
+            identity: "FI2Admin"
+            secret: "FI2Adminpw"
+          ibp:
+            display_name: "FI2 MSP"
+        ca: &FI2CA
+          id: "FI2CA"
+          admin_identity: "admin"
+          admin_secret: "adminpw"
+          tls:
+            enabled: false
+          docker:
+            name: ca.fi2.finance.security
+            hostname: ca.fi2.finance.security
+            port: 19050
+          ibp:
+            display_name: "FI2 CA"
+        peers:
+          - &FI2Peer1
+            id: "FI2Peer1"
+            identity: "fi2peer1"
+            secret: "fi2peer1pw"
+            database_type: couchdb
+            tls:
+              enabled: false
+              identity: "org2peer1tls"
+              secret: "org2peer1tlspw"
+            docker:
+              name: peer0.fi2.finance.security
+              hostname: peer0.fi2.finance.security
+              port: 19051
+              chaincode_port: 19052
+              operations_port: 19053
+              couchdb:
+                name: couchdb0.fi2.finance.security
+                hostname: couchdb0.fi2.finance.security
+                port: 19054
+            ibp:
+              display_name: "FI2 Peer1"
+
+        nodes: "{{ playbook_dir }}/nodes/FI2"
+        wallet: "{{ playbook_dir }}/wallets/FI2"
+        gateways: "{{ playbook_dir }}/gateways/FI2"
+      
+      - &FI3
+        msp:
+          id: "FI3MSP"
+          admin:
+            identity: "FI3Admin"
+            secret: "FI3Adminpw"
+          ibp:
+            display_name: "FI3 MSP"
+        ca: &FI3CA
+          id: "FI3CA"
+          admin_identity: "admin"
+          admin_secret: "adminpw"
+          tls:
+            enabled: false
+          docker:
+            name: ca.fi3.finance.security
+            hostname: ca.fi3.finance.security
+            port: 20050
+          ibp:
+            display_name: "FI3 CA"
+        peers:
+          - &FI3Peer1
+            id: "FI3Peer1"
+            identity: "fi3peer1"
+            secret: "fi3peer1pw"
+            database_type: couchdb
+            tls:
+              enabled: false
+              identity: "org2peer1tls"
+              secret: "org2peer1tlspw"
+            docker:
+              name: peer0.fi3.finance.security
+              hostname: peer0.fi3.finance.security
+              port: 20051
+              chaincode_port: 20052
+              operations_port: 20053
+              couchdb:
+                name: couchdb0.fi3.finance.security
+                hostname: couchdb0.fi3.finance.security
+                port: 20054
+            ibp:
+              display_name: "FI3 Peer1"
+  
+        nodes: "{{ playbook_dir }}/nodes/FI3"
+        wallet: "{{ playbook_dir }}/wallets/FI3"
+        gateways: "{{ playbook_dir }}/gateways/FI3"
+
+      - &OrdererOrg
+        msp:
+          id: "OrdererMSP"
+          admin:
+            identity: "ordererAdmin"
+            secret: "ordererAdminpw"
+          ibp:
+            display_name: "Orderer MSP"
+        ca: &OrdererCA
+          id: "OrdererCA"
+          admin_identity: "admin"
+          admin_secret: "adminpw"
+          tls:
+            enabled: false
+          docker:
+            name: ca.orderer.finance.security
+            hostname: ca.orderer.finance.security
+            port: 17050
+          ibp:
+            display_name: "Orderer CA"
+        orderer: &Orderer
+          id: "Orderer1"
+          identity: "orderer1"
+          secret: "orderer1pw"
+          tls:
+            enabled: false
+            identity: "orderer1tls"
+            secret: "orderer1tlspw"
+          consortium:
+            members:
+              - *FI1
+              - *FI2
+              - *FI3
+          docker:
+            name: orderer.finance.security
+            hostname: orderer.finance.security
+            port: 17051
+            operations_port: 17052
+          ibp:
+            display_name: "Orderer1"
+            cluster_name: "OrdererCluster"
+        nodes: "{{ playbook_dir }}/nodes/Orderer"
+        wallet: "{{ playbook_dir }}/wallets/Orderer"
+        gateways: "{{ playbook_dir }}/gateways/Orderer"
+    channels:
+      - &financechannel
+        name: financechannel
+        orderer: *Orderer
+        members:
+          - <<: *FI1
+            committing_peers:
+              - *FI1Peer1
+            anchor_peers:
+              - *FI1Peer1
+          - <<: *FI2
+            committing_peers:
+              - *FI2Peer1
+            anchor_peers:
+              - *FI2Peer1
+          - <<: *FI3
+            committing_peers:
+              - *FI3Peer1
+            anchor_peers:
+              - *FI3Peer1
+    gateways:
+      - name: FI1 gateway
+        organization:
+          <<: *FI1
+          gateway_peers:
+            - <<: *FI1Peer1
+      - name: FI2 gateway
+        organization:
+          <<: *FI2
+          gateway_peers:
+            - <<: *FI2Peer1
+      - name: FI3 gateway
+        organization:
+          <<: *FI3
+          gateway_peers:
+            - <<: *FI3Peer1
+  roles:
+    - ibm.blockchain_platform_manager

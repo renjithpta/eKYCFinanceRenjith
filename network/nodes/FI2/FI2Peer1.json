@@ -1,0 +1,11 @@
+{
+    "api_url": "grpc://localhost:19051",
+    "chaincode_url": "grpc://localhost:19052",
+    "container_name": "peer0.fi2.finance.security",
+    "identity": "FI2Admin",
+    "msp_id": "FI2MSP",
+    "name": "FI2Peer1",
+    "short_name": "FI2Peer1",
+    "type": "fabric-peer",
+    "wallet": "FI2"
+}

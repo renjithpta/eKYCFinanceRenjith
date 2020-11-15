@@ -1,0 +1,38 @@
+{
+    "certificateAuthorities": {
+        "FI3CA": {
+            "caName": "ca",
+            "url": "http://localhost:20050"
+        }
+    },
+    "client": {
+        "connection": {
+            "timeout": {
+                "orderer": "300",
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        },
+        "organization": "FI3MSP"
+    },
+    "name": "FI3 gateway",
+    "organizations": {
+        "FI3MSP": {
+            "certificateAuthorities": [
+                "FI3CA"
+            ],
+            "mspid": "FI3MSP",
+            "peers": [
+                "FI3Peer1"
+            ]
+        }
+    },
+    "peers": {
+        "FI3Peer1": {
+            "url": "grpc://localhost:20051"
+        }
+    },
+    "version": "1.0.0",
+    "wallet": "FI3"
+}

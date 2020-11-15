@@ -1,0 +1,8 @@
+{
+    "wallet":"/gateway/local/gen_local_wallet_fi3",
+    "connection_profile_filename":"../../../network/gateways/FI3/FI3 gateway.json",
+    "channel_name":"financechannel",
+    "smart_contract_name":"eKYC",
+    "peerForEventsSubscription": "peer0.fi3.finance.security"
+}
+

@@ -1,0 +1,11 @@
+{
+    "api_url": "http://localhost:18050",
+    "ca_name": "ca",
+    "container_name": "ca.fi1.finance.security",
+    "identity": "admin",
+    "msp_id": "FI1MSP",
+    "name": "FI1CA",
+    "short_name": "FI1CA",
+    "type": "fabric-ca",
+    "wallet": "FI1"
+}
